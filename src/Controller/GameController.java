@@ -10,17 +10,22 @@ public class GameController {
 	private String currentRoom;
 	private Rm room;
 	
-	
 	public GameController() {
 		
 	}
 	
+	public GameController(Rm room, String currentRoom) {
+		this.room = room;
+		this.currentRoom = currentRoom;
+	}
+	
 	public String getCurrentRoom() {
+	
 		return currentRoom;
 	}
 
 	public void setCurrentRoom(String currentRoom) {
-		this.currentRoom = "RM101";
+		this.currentRoom = currentRoom;
 	}
 	
 	public Rm getRoom() {
@@ -32,11 +37,9 @@ public class GameController {
 	}
 
 	public static void main(String[] args) {
-		GameController status = new GameController();
-		ViewConsole view = new ViewConsole();
 		Rm room = new Rm("RM101"); //start of the game
-		status.setRoom(room);
-		
+		GameController status = new GameController(room, "RM101");
+		ViewConsole view = new ViewConsole();
 		
 		// Title Screen
 		System.out.println("+--------------------------------------------------------+");
@@ -48,15 +51,16 @@ public class GameController {
 		System.out.println("\t[2]  Load Saved Game");
 
 		Scanner input = new Scanner(System.in);
-		
-		String currentRoom = room.getRmID();
+		String currentRoom = room.getRmID() + " --> " + room.getRmName();
 		String str = "";
 
 		str = input.nextLine();
 		if(str.equals("1")) 
 		{
-			String newStr = "You are on level 1: Entrance \n\n\t" + room.getRmDescription();
-			view.print(newStr + "\n");	
+			String newGameStr = "You have just entered the Mansion. You are are currently in:\n\t" + status.getCurrentRoom() + ":\t"
+								+ room.getRmDescription(currentRoom);
+			String newStr = "\nHere are your Menu of Options";
+			view.print(newGameStr + "\n" + newStr + "\n");	
 		}
 		else if (str.equals("2"))
 		{
@@ -69,27 +73,28 @@ public class GameController {
 			while(true) {
 
 				//View Commands
-				System.out.println("Here are your Menu of Options");
-				System.out.println("\t[1]  Enter a Room");
-				System.out.println("\t[2]  Attack Monster");
-				System.out.println("\t[3]  Solve Puzzle");
-				System.out.println("\t[4]  Equipt an Item");
-				System.out.println("\t[5]  View Inventory");
-				System.out.println("\t[6]  Check Health Status");
-				System.out.println("\t[7]  Save Game");
-				System.out.println("\t[8]  Exit Game");
+				System.out.println("Please CHOOSE ONE of the following Menu of Options");
+				System.out.println("\t> TYPE IN THE NUMBER ONLY");
+				System.out.println("\t[1]  Enter Room");
+				System.out.println("\t[2]  Equipt an Item");
+				System.out.println("\t[3]  View Inventory");
+				System.out.println("\t[4]  Check Health Status");
+				System.out.println("\t[5]  Save Game");
+				System.out.println("\t[6]  Exit Game");
 				String optionStr = input.nextLine();
 				String newStr = "";
 				switch(optionStr) {
 				case "1": 
 					//enter room code
+					//currentRoom = room.getRmID() + " --> " + room.getRmName();
+					//newStr = "You have entered the Room zone\n" + "Your currently are on level " + room.getRmLevel(currentRoom.substring(0, 1)) +
+					//		". " + currentRoom;
 					newStr = "You have entered the Room zone\n";
-					currentRoom = room.getRmID() + " --> " + room.getRmName();
-					view.print(newStr + currentRoom);
+					view.print(newStr);
 					room.printRoomDetails();
 					
 					break;
-				case "2":
+				/*case "2":
 					//attack monster code
 					MonsterTest m = new MonsterTest();
 					newStr = "Are you ready to Rummmmble....You asked for it!!! ";
@@ -106,24 +111,25 @@ public class GameController {
 					newStr = "You have entered the Puzzle zone\n";	
 					view.print(newStr);
 					puzzle.printPuzzle();
-					break;
+					break;*/
 
-				case "4": 
+				case "2": 
 					//equip item
 					break;
-				case "5":
+				case "3":
 					//view inventory
 					break;
-				case "6":
+				case "4":
 					//check health
 					break;
-				case "7":
+				case "5":
 					//save game
 					break;
-				case "8":
+				case "6":
 					//exit game
 					break;
 				default:
+					System.out.println("Not a valid command.  Enter in a number please");
 
 				}
 			}
